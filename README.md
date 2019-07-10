@@ -168,3 +168,24 @@ This will now leave two total commits in this line of the graph.
 ```
 
 Please note that this will require a force push in order to update the remote which will then require everyone with a local copy of the branch to delete and re-fetch.
+
+## Branch Bankruptcy
+
+Sometimes the history of a branch is so dirty that the only recourse is to start over. While on the surface it sounds hard to get into this situation, but a common reason for this happening is using the GitHub web interface to update a PR against the target when it becomes out of date.
+
+The first few times you declare branch bankruptcy you will want to make a copy of your branch. The good news is you can do that simply by pushing your changes to the remote.
+
+```sh
+git push origin features/bankruptcy
+```
+
+Or if you are really worried, let's work inside of a new branch. In this case let's create a new `features/life-is-good` branch and then do a soft reset that will make git think our parent is the `master` branch.
+
+```sh
+git checkout -b features/life-is-good
+git reset --soft master
+```
+
+A soft reset does not change the local files, instead it just makes the current branch a straight line to the parent and then flag all of the local files as being modified.
+
+At this point you get to add whatever changes you like and create commits. This is your clean start to make any history you want inside of the branch.
