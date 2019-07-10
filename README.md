@@ -127,3 +127,44 @@ Cras maximus luctus sapien, ut sollicitudin nulla facilisis ullamcorper. Maecena
 Nam aliquam tincidunt arcu, vel bibendum metus. Duis efficitur lobortis felis sit amet mollis. Nunc nec ultrices magna. Etiam ac elit enim. Curabitur in diam ipsum. Praesent in lacus cursus, consectetur diam vitae, commodo massa. Donec vulputate velit id leo tempus consequat. Ut eu erat nisl. Pellentesque enim tortor, dignissim vel arcu a, gravida fermentum eros. Phasellus ut viverra nisi.
 
 Donec ut pharetra augue, sit amet efficitur ex. Integer convallis diam sit amet mauris mollis placerat ut at mauris. Cras quis mi dolor. Nam ac mauris non dolor efficitur porta. Cras eget lorem in metus efficitur placerat. Nunc nisl metus, bibendum in tortor ultricies, faucibus euismod mi. Curabitur elementum mollis augue at facilisis. Curabitur semper magna ut purus aliquam posuere. Vestibulum eu sem vitae lorem sagittis sodales.
+
+## Squashing Commits
+
+Squashing a commit may be done while preparing a branch for a Pull Request so that the commit history is clean and proper commit messages are used.
+
+Squashing a commit is very similar to dropping commits from history, instead of dropping though a `squash` is performed.
+
+Using the scenario of preparing the branch `features/branching` for a Pull Request, I want to clean up the commit messages and also squash everything down into a single commit. Doing this is as simple as performing an interactive rebase against master.
+
+```sh
+git rebase --interactive master
+```
+
+This will bring up the `git-rebase-todo` file in your preferred editor. Make the following changes to sqash everything down into one commit.
+
+```plain
+pick 3ab36d5 Starting tutorial for git
+squash cac3f6f Add branching tutorial
+squash 3134e4e More work on the tutorial
+```
+
+After this file is written, a new file is opened that will let you modify the commit message that is used for the squashed commit.
+
+```plain
+Create a tutorial for working with branches.
+
+This tutorial additionally includes frequently used techniques for
+keeping branches clean:
+  - Rebase
+  - Squash
+  - Branch Bankruptcy
+```
+
+This will now leave two total commits in this line of the graph.
+
+```plain
+* b398824 (HEAD -> features/branching) Create a tutorial for working with branches.
+* a3cde16 (master) First commit
+```
+
+Please note that this will require a force push in order to update the remote which will then require everyone with a local copy of the branch to delete and re-fetch.
